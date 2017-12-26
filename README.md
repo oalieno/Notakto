@@ -18,6 +18,7 @@ Other resource
 
 - [wiki](https://en.wikipedia.org/wiki/Notakto)
 - [blog](http://gmmentalgym.blogspot.tw/2012/05/how-to-play-and-win-notakto.html#intro)
+- [**App Store** and **Google Play** game](http://www.counterwavegames.com/notakto/)
 
 ## Install
 
