@@ -91,6 +91,12 @@ class Notakto:
     def _is_dead_board(self, index):
         return self._has_line(self.boards[index])
 
+    def is_finish(self):
+        for board in self.boards:
+            if not self._has_line(board):
+                return False
+        return True
+
     def move_check(self, index, x, y):
         if self._is_invalid(index, x, y):
             raise InvalidMoveError
