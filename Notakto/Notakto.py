@@ -1,11 +1,11 @@
 import random
 from functools import reduce
 
-from exceptions import NotaktoError, InvalidMoveError, GridOccupiedError, DeadBoardError, NoAvailableMoveError
-from constants import PATTERN, BOARD_WIDTH
-from utils import board_to_int
-from Monoid import Monoid
-from Result import Result
+from .exceptions import NotaktoError, InvalidMoveError, GridOccupiedError, DeadBoardError, NoAvailableMoveError
+from .constants import PATTERN, BOARD_WIDTH
+from .utils import board_to_int
+from .Monoid import Monoid
+from .Result import Result
 
 class Notakto:
     """notakto AI

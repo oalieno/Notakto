@@ -1,5 +1,5 @@
-from utils import board_to_int
-from Monoid import Monoid
+from .utils import board_to_int
+from .Monoid import Monoid
 
 BOARD_WIDTH = 3
 
