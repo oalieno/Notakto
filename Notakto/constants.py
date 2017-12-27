@@ -1,6 +1,8 @@
 from utils import board_to_int
 from Monoid import Monoid
 
+BOARD_WIDTH = 3
+
 _1    = Monoid(0, 0, 0, 0)
 _A    = Monoid(1, 0, 0, 0)
 _B    = Monoid(0, 1, 0, 0)

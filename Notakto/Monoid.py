@@ -12,6 +12,13 @@ class Monoid:
     def __mul__(self, other):
         value = map(lambda x: x[0] + x[1], zip(self.value, other.value))
         return Monoid(*value)
+
+    def __repr__(self):
+        ans = []
+        for var, order in zip("abcd", self.value):
+            if order > 0: ans.append("{}^{}".format(var, order))
+        if ans: return ' x '.join(ans)
+        else: return "1"
     
     @property
     def value(self):
@@ -32,7 +39,8 @@ class Monoid:
         rules = self._get_reduce_rules()
         while True:
             old_value = self.value
-            for rule in rules: rule()
+            for rule in rules:
+                rule()
             if self._unchange(old_value): break
 
     def _get_reduce_rules(self):

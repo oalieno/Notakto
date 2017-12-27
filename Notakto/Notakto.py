@@ -1,24 +1,52 @@
 import random
 from functools import reduce
 
-import exceptions
-from constants import PATTERN
-from utils import board_to_int, has_line
+from exceptions import NotaktoError, InvalidMoveError, GridOccupiedError, DeadBoardError, NoAvailableMoveError
+from constants import PATTERN, BOARD_WIDTH
+from utils import board_to_int
 from Monoid import Monoid
-
-BOARD_WIDTH = 3
+from Result import Result
 
 class Notakto:
-    """notakto solver engine
+    """notakto AI
+
+    Example
+    -------
+
+        >>> notakto = Notakto([empty_board()])
+        >>> result = notakto.move_optimize()
+
+        >>> result
+        Result(c^2, 0, 1, 1)
+        >>> print(result)
+        Current Monoid: c^2
+        Winning Position? True
+        Last move was at the 0 board
+           |   |  
+        ---+---+---
+           | X |  
+        ---+---+---
+           |   |  
+        >>> result.move
+        (0, 1, 1)
+
+        >>> notakto.move(0, 0, 1)
+        Result(b^1, 0, 0, 1)
+
+    Parameters
+    ----------
+    boards : list of list of list of int
+        A list of 3 x 3 boards ( 0 -> empty, 1 -> occupied )
+
+    Attributes
+    ----------
+    boards : list of list of list of int
+        A list of 3 x 3 boards ( 0 -> empty, 1 -> occupied )
+    status : Monoid Class
+        the current game status
     """
 
     def __init__(self, boards):
-        """constructor
-
-        Parameters
-        ----------
-        boards : list of list of list of int
-        """
         self.boards = boards
 
     @property
@@ -64,41 +92,42 @@ class Notakto:
 
     def move_check(self, index, x, y):
         if self._is_invalid(index, x, y):
-            raise exceptions.InvalidMoveError
+            raise InvalidMoveError
         if self._is_occupied(index, x, y):
-            raise exceptions.GridOccupiedError
+            raise GridOccupiedError
         if self._is_dead_board(index):
-            raise exceptions.DeadBoardError
+            raise DeadBoardError
 
     def move(self, index, x, y, virtual = False):
         self.move_check(index, x, y)
         self.boards[index][x][y] = 1
-        status = self.status.is_win()
+        status = self.status
         if virtual: self.boards[index][x][y] = 0
-        return status
+        return Result(status, index, x, y)
 
-    def move_random(self):
+    def move_random(self, virtual = False):
         index = random.randrange(0, len(self.boards))
         x = random.randrange(0, BOARD_WIDTH)
         y = random.randrange(0, BOARD_WIDTH)
         for _ in range(len(self.boards) * 9):
             try:
-                self.move(index, x, y)
-                return (index, x, y)
-            except exceptions.DeadBoardError:
+                result = self.move(index, x, y, virtual)
+                return result
+            except DeadBoardError:
                 index, x, y = (index + 1) % len(self.boards), 0, 0
-            except exceptions.NotaktoError:
+            except NotaktoError:
                 index, x, y = self._next_index(index, x, y)
-        raise exceptions.NoAvailableMoveError
+        raise NoAvailableMoveError
 
-    def move_optimize(self):
+    def move_optimize(self, virtual = False):
         for k in range(len(self.boards)):
             for i in range(BOARD_WIDTH):
                 for j in range(BOARD_WIDTH):
                     try:
-                        if self.move(k, i, j, virtual = True):
-                            self.move(k, i, j)
-                            return (k, i, j)
-                    except exceptions.NotaktoError:
+                        if self.move(k, i, j, virtual = True).status.is_win():
+                            result = self.move(k, i, j, virtual)
+                            return result
+                    except NotaktoError:
                         pass
-        self.move_random()
+        result = self.move_random(virtual)
+        return result
