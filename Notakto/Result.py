@@ -1,3 +1,5 @@
+from .constants import BOARD_TEMPLATE
+
 class Result:
     def __init__(self, status, index, x, y):
         self.status = status
@@ -18,9 +20,5 @@ class Result:
                "Last move was at the {} board\n").format(self.status, self.status.is_win(), self.index)
         stones = [' '] * 9
         stones[self.x * 3 + self.y] = 'X'
-        ans += (" {} | {} | {}\n"
-                "---+---+---\n"
-                " {} | {} | {}\n"
-                "---+---+---\n"
-                " {} | {} | {}\n").format(*stones)
+        ans += BOARD_TEMPLATE.format(*stones)
         return ans

@@ -2,7 +2,8 @@ import random
 from functools import reduce
 
 from .exceptions import NotaktoError, InvalidMoveError, GridOccupiedError, DeadBoardError, NoAvailableMoveError
-from .constants import PATTERN, BOARD_WIDTH
+from .constants import BOARD_WIDTH
+from .pattern import PATTERN
 from .utils import board_to_int
 from .Monoid import Monoid
 from .Result import Result
