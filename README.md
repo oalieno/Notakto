@@ -1,5 +1,7 @@
 # Notakto
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 Notakto AI with excellent API
 
 ## What is Notakto?
@@ -22,7 +24,11 @@ Other resource
 
 ## Install
 
-TODO
+```
+pip3 install Notakto
+```
+
+Support only **python3**
 
 ## Document
 
