@@ -4,7 +4,7 @@ from functools import reduce
 from .exceptions import NotaktoError, InvalidMoveError, GridOccupiedError, DeadBoardError, NoAvailableMoveError
 from .constants import BOARD_WIDTH
 from .pattern import PATTERN
-from .utils import board_to_int
+from .utils import board_to_int, empty_board
 from .Monoid import Monoid
 from .Result import Result
 
@@ -14,7 +14,7 @@ class Notakto:
     Example
     -------
 
-        >>> notakto = Notakto([empty_board()])
+        >>> notakto = Notakto(1)
         >>> result = notakto.move_optimize()
 
         >>> result
@@ -47,8 +47,9 @@ class Notakto:
         the current game status
     """
 
-    def __init__(self, boards):
+    def __init__(self, empty = 0, boards = []):
         self.boards = boards
+        self.boards += [empty_board() for _ in range(empty)]
 
     @property
     def status(self):
