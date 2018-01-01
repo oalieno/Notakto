@@ -47,8 +47,8 @@ class Notakto:
         the current game status
     """
 
-    def __init__(self, empty = 0, boards = []):
-        self.boards = boards
+    def __init__(self, empty = 0, boards = None):
+        self.boards = boards or []
         self.boards += [empty_board() for _ in range(empty)]
 
     @property
