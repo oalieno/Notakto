@@ -32,4 +32,4 @@ Support only **python3**
 
 ## Document
 
-TODO
+See the [Notakto Wiki](https://github.com/OAlienO/Notakto/wiki)
